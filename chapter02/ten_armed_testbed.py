@@ -40,7 +40,7 @@ class Bandit:
         self.epsilon = epsilon
         self.initial = initial
 
-    def reset(self):
+    def reset(self):,
         # real reward for each action
         self.q_true = np.random.randn(self.k) + self.true_reward
 
@@ -57,7 +57,7 @@ class Bandit:
     # get an action for this bandit
     def act(self):
         if np.random.rand() < self.epsilon:
-            return np.random.choice(self.indices)
+            return np.random.choice(self.indices) 
 
         if self.UCB_param is not None:
             UCB_estimation = self.q_estimation + \
@@ -67,7 +67,7 @@ class Bandit:
 
         if self.gradient:
             exp_est = np.exp(self.q_estimation)
-            self.action_prob = exp_est / np.sum(exp_est)
+            self.action_prob = exp_est / np.sum(exp_est) #吉布斯-玻尔兹曼分布
             return np.random.choice(self.indices, p=self.action_prob)
 
         q_best = np.max(self.q_estimation)
@@ -88,7 +88,7 @@ class Bandit:
             one_hot = np.zeros(self.k)
             one_hot[action] = 1
             if self.gradient_baseline:
-                baseline = self.average_reward
+                baseline = self.average_reward  #收益基准项即为平均收益
             else:
                 baseline = 0
             self.q_estimation += self.step_size * (reward - baseline) * (one_hot - self.action_prob)
